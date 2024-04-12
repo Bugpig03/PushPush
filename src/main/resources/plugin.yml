@@ -1,0 +1,9 @@
+name: PushPush
+version: '${project.version}'
+main: org.snoutlabs.pushpush.PushPush
+api-version: '1.20'
+
+commands:
+  pushpush:
+    description : setup spawn for push
+    usage: /<command>
