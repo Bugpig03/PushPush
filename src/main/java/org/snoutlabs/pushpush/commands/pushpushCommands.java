@@ -1,14 +1,19 @@
 package org.snoutlabs.pushpush.commands;
 
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.Vector;
 import org.snoutlabs.pushpush.PushPush;
 
 public class pushpushCommands implements CommandExecutor {
@@ -42,16 +47,33 @@ public class pushpushCommands implements CommandExecutor {
                 if (location != null) {
                     p.teleport(location);
                 }
+                // Init Player for PushPush
+                p.setGameMode(GameMode.SURVIVAL);
+                p.setHealth(20);
+                p.setFoodLevel(20);
+                p.setLevel(0);
+                p.setExp(0);
+                PlayerInventory playerInventory = p.getInventory();
+                playerInventory.clear();
+
                 // Item kit
+
+                //Push Stick
                 ItemStack pushStick = new ItemStack(Material.STICK);
                 ItemMeta pushStickMeta = pushStick.getItemMeta();
                 pushStickMeta.setDisplayName(ChatColor.GREEN + "Push Stick");
-                
+                pushStickMeta.addEnchant(Enchantment.KNOCKBACK, 2, false);
                 pushStick.setItemMeta(pushStickMeta);
 
                 p.getInventory().setItem(0, pushStick);
 
+                //Snowball Pouf
+                ItemStack snowballPouf = new ItemStack(Material.SNOWBALL,16);
+                ItemMeta snowballPoufMeta = snowballPouf.getItemMeta();
+                snowballPoufMeta.setDisplayName(ChatColor.AQUA + "Pouf Ball");
+                snowballPouf.setItemMeta(snowballPoufMeta);
 
+                p.getInventory().setItem(1, snowballPouf);
 
             }
         }
