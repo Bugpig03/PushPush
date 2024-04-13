@@ -36,10 +36,10 @@ public class pushpushCommands implements CommandExecutor {
                         Location location = p.getLocation();
                         plugin.getConfig().set("spawn", location);
                         plugin.saveConfig();
-                        p.sendMessage("Vous venez de définir les coordonnées du spawn PushPush");
+                        p.sendMessage(ChatColor.GREEN + "Vous venez de définir les coordonnées du spawn PushPush");
                     }
                 } else {
-                    p.sendMessage("Vous n'avez pas le permissions de faire cette commande");
+                    p.sendMessage(ChatColor.DARK_RED +"Vous n'avez pas lA permissions de faire cette commande");
                 }
 
 
@@ -47,6 +47,7 @@ public class pushpushCommands implements CommandExecutor {
                 Location location = plugin.getConfig().getLocation("spawn");
                 if (location != null) {
                     p.teleport(location);
+                    p.sendMessage(ChatColor.GREEN + "Vous avez rejoint le PushPush");
                 }
 
             } else if (args[0].equals("leave")) {
@@ -55,8 +56,10 @@ public class pushpushCommands implements CommandExecutor {
                 PersistentDataContainer data = p.getPersistentDataContainer();
 
                 p.getPersistentDataContainer().set(new NamespacedKey(plugin, "pushpush"), PersistentDataType.BOOLEAN, false);
-                p.sendMessage("Vous avez quitté le pushpush");
+                p.sendMessage(ChatColor.RED + "Vous avez quitté(e) le PushPush");
                 p.teleport(location);
+                PlayerInventory playerInventory = p.getInventory();
+                playerInventory.clear();
             }
         }
 

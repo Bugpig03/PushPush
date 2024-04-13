@@ -42,11 +42,18 @@ public class walkOnBlockListener implements Listener {
             JoinPlayerPushPush(p);
         } else if (block.getType() == triggerBlockDeathType) {
 
-            p.sendMessage("Vous etes tombé !");
-            p.teleport(plugin.getConfig().getLocation("spawn"));
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                p.getPersistentDataContainer().set(new NamespacedKey(plugin, "pushpush"), PersistentDataType.BOOLEAN, false);
-            }, 10);
+            if (p.getPersistentDataContainer().has(new NamespacedKey(plugin, "pushpush"), PersistentDataType.BOOLEAN)) {
+                if (p.getPersistentDataContainer().get(new NamespacedKey(plugin, "pushpush"), PersistentDataType.BOOLEAN) == true) {
+                    p.sendMessage(ChatColor.RED + "Vous êtes tombé(e) de l'arène PushPush");
+                    p.teleport(plugin.getConfig().getLocation("spawn"));
+                    PlayerInventory playerInventory = p.getInventory();
+                    playerInventory.clear();
+                    p.setLevel(0);
+                    Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                        p.getPersistentDataContainer().set(new NamespacedKey(plugin, "pushpush"), PersistentDataType.BOOLEAN, false);
+                    }, 10);
+                }
+            }
         }
 
 
@@ -82,7 +89,7 @@ public class walkOnBlockListener implements Listener {
         ItemStack pushStick = new ItemStack(Material.STICK);
         ItemMeta pushStickMeta = pushStick.getItemMeta();
         pushStickMeta.setDisplayName(ChatColor.GREEN + "Push Stick");
-        pushStickMeta.addEnchant(Enchantment.KNOCKBACK, 2, false);
+        pushStickMeta.addEnchant(Enchantment.KNOCKBACK, 1, false);
         pushStick.setItemMeta(pushStickMeta);
 
         p.getInventory().setItem(0, pushStick);
