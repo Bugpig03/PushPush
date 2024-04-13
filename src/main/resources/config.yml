@@ -1,0 +1,8 @@
+# CONFIG PUSHPUSH
+
+triggerBlockToJoin: NOTE_BLOCK
+triggerBlockToJoinForwardForce : 2.0
+triggerBlockToJoinUpwardForce : 1.8
+
+triggerBlockDeath: RED_TERRACOTTA
+

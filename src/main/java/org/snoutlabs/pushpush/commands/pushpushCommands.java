@@ -1,9 +1,6 @@
 package org.snoutlabs.pushpush.commands;
 
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,6 +10,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 import org.snoutlabs.pushpush.PushPush;
 
@@ -42,39 +41,22 @@ public class pushpushCommands implements CommandExecutor {
                 } else {
                     p.sendMessage("Vous n'avez pas le permissions de faire cette commande");
                 }
+
+
             } else if (args[0].equals("join")) {
                 Location location = plugin.getConfig().getLocation("spawn");
                 if (location != null) {
                     p.teleport(location);
                 }
-                // Init Player for PushPush
-                p.setGameMode(GameMode.SURVIVAL);
-                p.setHealth(20);
-                p.setFoodLevel(20);
-                p.setLevel(0);
-                p.setExp(0);
-                PlayerInventory playerInventory = p.getInventory();
-                playerInventory.clear();
 
-                // Item kit
+            } else if (args[0].equals("leave")) {
 
-                //Push Stick
-                ItemStack pushStick = new ItemStack(Material.STICK);
-                ItemMeta pushStickMeta = pushStick.getItemMeta();
-                pushStickMeta.setDisplayName(ChatColor.GREEN + "Push Stick");
-                pushStickMeta.addEnchant(Enchantment.KNOCKBACK, 2, false);
-                pushStick.setItemMeta(pushStickMeta);
+                Location location = plugin.getConfig().getLocation("spawn");
+                PersistentDataContainer data = p.getPersistentDataContainer();
 
-                p.getInventory().setItem(0, pushStick);
-
-                //Snowball Pouf
-                ItemStack snowballPouf = new ItemStack(Material.SNOWBALL,16);
-                ItemMeta snowballPoufMeta = snowballPouf.getItemMeta();
-                snowballPoufMeta.setDisplayName(ChatColor.AQUA + "Pouf Ball");
-                snowballPouf.setItemMeta(snowballPoufMeta);
-
-                p.getInventory().setItem(1, snowballPouf);
-
+                p.getPersistentDataContainer().set(new NamespacedKey(plugin, "pushpush"), PersistentDataType.BOOLEAN, false);
+                p.sendMessage("Vous avez quitté le pushpush");
+                p.teleport(location);
             }
         }
 
