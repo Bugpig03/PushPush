@@ -4,5 +4,7 @@ triggerBlockToJoin: NOTE_BLOCK
 triggerBlockToJoinForwardForce : 2.0
 triggerBlockToJoinUpwardForce : 1.8
 triggerBlockDeath: RED_TERRACOTTA
-knockbackMultiplier: 0.10
+knockbackMultiplier: 0.05
+knockbackMultiplierUp: 0.02
+doubleJumpForce: 1.0
 

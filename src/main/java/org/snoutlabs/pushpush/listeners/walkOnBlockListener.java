@@ -15,6 +15,8 @@ import org.bukkit.util.Vector;
 import org.snoutlabs.pushpush.PushPush;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Arrays;
+
 public class walkOnBlockListener implements Listener {
 
     public final PushPush plugin;
@@ -56,7 +58,14 @@ public class walkOnBlockListener implements Listener {
             }
         }
 
+        if (p.getPersistentDataContainer().has(new NamespacedKey(plugin, "pushpush"), PersistentDataType.BOOLEAN)) {
+            if (p.getPersistentDataContainer().get(new NamespacedKey(plugin, "pushpush"), PersistentDataType.BOOLEAN) == true) {
 
+                if (p.isOnGround()) {
+                    p.setAllowFlight(true);
+                }
+            }
+        }
     }
 
     private void BoostPlayerVelocity(Player p, double forceForward, double forceUp) {
@@ -89,7 +98,8 @@ public class walkOnBlockListener implements Listener {
         ItemStack pushStick = new ItemStack(Material.STICK);
         ItemMeta pushStickMeta = pushStick.getItemMeta();
         pushStickMeta.setDisplayName(ChatColor.GREEN + "Push Stick");
-        pushStickMeta.addEnchant(Enchantment.KNOCKBACK, 1, false);
+        pushStickMeta.setLore(Arrays.asList(ChatColor.YELLOW + "Damage + 3%"));
+        //pushStickMeta.addEnchant(Enchantment.KNOCKBACK, 1, false);
         pushStick.setItemMeta(pushStickMeta);
 
         p.getInventory().setItem(0, pushStick);
@@ -98,6 +108,7 @@ public class walkOnBlockListener implements Listener {
         ItemStack snowballPouf = new ItemStack(Material.SNOWBALL,16);
         ItemMeta snowballPoufMeta = snowballPouf.getItemMeta();
         snowballPoufMeta.setDisplayName(ChatColor.AQUA + "Pouf Ball");
+        snowballPoufMeta.setLore(Arrays.asList(ChatColor.YELLOW + "Damage + 1%"));
         snowballPouf.setItemMeta(snowballPoufMeta);
 
         p.getInventory().setItem(1, snowballPouf);

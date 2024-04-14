@@ -60,6 +60,7 @@ public class pushpushCommands implements CommandExecutor {
                 p.teleport(location);
                 PlayerInventory playerInventory = p.getInventory();
                 playerInventory.clear();
+                p.setAllowFlight(false);
             }
         }
 
